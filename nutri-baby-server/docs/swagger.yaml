@@ -1,0 +1,1259 @@
+basePath: /
+definitions:
+  dto.CancelSubscriptionRequest:
+    properties:
+      templateType:
+        type: string
+    required:
+    - templateType
+    type: object
+  dto.CreateVaccineScheduleRequest:
+    properties:
+      ageInMonths:
+        type: integer
+      description:
+        type: string
+      doseNumber:
+        type: integer
+      isRequired:
+        type: boolean
+      reminderDays:
+        type: integer
+      templateId:
+        description: 可选:基于模板创建
+        type: string
+      vaccineName:
+        type: string
+      vaccineType:
+        type: string
+    required:
+    - ageInMonths
+    - doseNumber
+    - vaccineName
+    - vaccineType
+    type: object
+  dto.MessageLogItem:
+    properties:
+      createdAt:
+        type: integer
+      errmsg:
+        type: string
+      id:
+        type: integer
+      sendStatus:
+        type: string
+      sendTime:
+        type: integer
+      templateType:
+        type: string
+    type: object
+  dto.MessageLogsResponse:
+    properties:
+      logs:
+        items:
+          $ref: '#/definitions/dto.MessageLogItem'
+        type: array
+      total:
+        type: integer
+    type: object
+  dto.SubscribeAuthDTO:
+    properties:
+      status:
+        enum:
+        - accept
+        - reject
+        type: string
+      templateId:
+        type: string
+      templateType:
+        type: string
+    required:
+    - status
+    - templateId
+    - templateType
+    type: object
+  dto.SubscribeAuthRequest:
+    properties:
+      records:
+        items:
+          $ref: '#/definitions/dto.SubscribeAuthDTO'
+        minItems: 1
+        type: array
+    required:
+    - records
+    type: object
+  dto.SubscribeAuthResponse:
+    properties:
+      failedCount:
+        type: integer
+      successCount:
+        type: integer
+    type: object
+  dto.SubscribeStatusResponse:
+    properties:
+      subscriptions:
+        items:
+          $ref: '#/definitions/dto.SubscriptionItem'
+        type: array
+    type: object
+  dto.SubscriptionItem:
+    properties:
+      expireTime:
+        type: integer
+      status:
+        type: string
+      subscribeTime:
+        type: integer
+      templateId:
+        type: string
+      templateType:
+        type: string
+    type: object
+  dto.UpdateScheduleInfoRequest:
+    properties:
+      ageInMonths:
+        description: 接种月龄
+        type: integer
+      description:
+        description: 描述
+        type: string
+      doseNumber:
+        description: 剂次
+        type: integer
+      isRequired:
+        description: 是否必打
+        type: boolean
+      reminderDays:
+        description: 提醒天数
+        type: integer
+      vaccineName:
+        description: 疫苗名称
+        type: string
+      vaccineType:
+        description: 疫苗类型
+        type: string
+    type: object
+  dto.UpdateVaccineScheduleRequest:
+    properties:
+      batchNumber:
+        description: 批号(可选)
+        type: string
+      doctor:
+        description: 医生(可选)
+        type: string
+      hospital:
+        description: 接种医院
+        type: string
+      note:
+        description: 备注(可选)
+        type: string
+      reaction:
+        description: 不良反应(可选)
+        type: string
+      vaccinationStatus:
+        description: pending, completed, skipped
+        type: string
+      vaccineDate:
+        description: 接种日期
+        type: integer
+    type: object
+  dto.VaccineReminderDTO:
+    properties:
+      babyId:
+        type: string
+      babyName:
+        type: string
+      createTime:
+        type: integer
+      daysUntilDue:
+        type: integer
+      doseNumber:
+        type: integer
+      planId:
+        type: string
+      reminderId:
+        type: string
+      reminderSent:
+        type: boolean
+      scheduledDate:
+        type: integer
+      status:
+        type: string
+      vaccineName:
+        type: string
+    type: object
+  dto.VaccineScheduleDTO:
+    properties:
+      ageInMonths:
+        type: integer
+      babyId:
+        type: string
+      batchNumber:
+        type: string
+      completedBy:
+        type: string
+      completedByAvatar:
+        type: string
+      completedByName:
+        type: string
+      completedTime:
+        type: integer
+      createBy:
+        type: string
+      createTime:
+        type: integer
+      description:
+        type: string
+      doctor:
+        type: string
+      doseNumber:
+        type: integer
+      hospital:
+        type: string
+      isCustom:
+        type: boolean
+      isRequired:
+        type: boolean
+      note:
+        type: string
+      reaction:
+        type: string
+      reminderDays:
+        type: integer
+      scheduleId:
+        type: string
+      templateId:
+        type: string
+      vaccinationStatus:
+        description: pending, completed, skipped
+        type: string
+      vaccineDate:
+        description: 接种记录信息(仅在 status='completed' 时有值)
+        type: integer
+      vaccineName:
+        type: string
+      vaccineType:
+        type: string
+    type: object
+  dto.VaccineScheduleStatisticsDTO:
+    properties:
+      completed:
+        type: integer
+      completionRate:
+        type: integer
+      pending:
+        type: integer
+      skipped:
+        type: integer
+      total:
+        type: integer
+    type: object
+  entity.AIAlert:
+    properties:
+      description:
+        description: 描述
+        type: string
+      level:
+        description: 警告级别(critical/warning/info)
+        type: string
+      suggestion:
+        description: 建议
+        type: string
+      timestamp:
+        description: 时间戳
+        type: string
+      title:
+        description: 标题
+        type: string
+      type:
+        description: 警告类型
+        type: string
+    type: object
+  entity.AIAnalysisResult:
+    properties:
+      alerts:
+        items:
+          $ref: '#/definitions/entity.AIAlert'
+        type: array
+      analysis_id:
+        type: integer
+      analysis_type:
+        $ref: '#/definitions/entity.AIAnalysisType'
+      baby_id:
+        type: integer
+      insights:
+        items:
+          $ref: '#/definitions/entity.AIInsight'
+        type: array
+      metadata:
+        additionalProperties: true
+        type: object
+      patterns:
+        items:
+          $ref: '#/definitions/entity.AIPattern'
+        type: array
+      predictions:
+        items:
+          $ref: '#/definitions/entity.AIPrediction'
+        type: array
+      score:
+        type: number
+    type: object
+  entity.AIAnalysisStatus:
+    enum:
+    - pending
+    - analyzing
+    - completed
+    - failed
+    type: string
+    x-enum-comments:
+      AIAnalysisStatusAnalyzing: 分析中
+      AIAnalysisStatusCompleted: 已完成
+      AIAnalysisStatusFailed: 分析失败
+      AIAnalysisStatusPending: 待分析
+    x-enum-descriptions:
+    - 待分析
+    - 分析中
+    - 已完成
+    - 分析失败
+    x-enum-varnames:
+    - AIAnalysisStatusPending
+    - AIAnalysisStatusAnalyzing
+    - AIAnalysisStatusCompleted
+    - AIAnalysisStatusFailed
+  entity.AIAnalysisType:
+    enum:
+    - feeding
+    - sleep
+    - growth
+    - health
+    - behavior
+    type: string
+    x-enum-comments:
+      AIAnalysisTypeBehavior: 行为分析
+      AIAnalysisTypeFeeding: 喂养分析
+      AIAnalysisTypeGrowth: 成长分析
+      AIAnalysisTypeHealth: 健康分析
+      AIAnalysisTypeSleep: 睡眠分析
+    x-enum-descriptions:
+    - 喂养分析
+    - 睡眠分析
+    - 成长分析
+    - 健康分析
+    - 行为分析
+    x-enum-varnames:
+    - AIAnalysisTypeFeeding
+    - AIAnalysisTypeSleep
+    - AIAnalysisTypeGrowth
+    - AIAnalysisTypeHealth
+    - AIAnalysisTypeBehavior
+  entity.AIInsight:
+    properties:
+      category:
+        description: 分类
+        type: string
+      description:
+        description: 详细描述
+        type: string
+      priority:
+        description: 优先级(high/medium/low)
+        type: string
+      title:
+        description: 标题
+        type: string
+      type:
+        description: insight类型
+        type: string
+    type: object
+  entity.AIPattern:
+    properties:
+      confidence:
+        description: 置信度(0-1)
+        type: number
+      description:
+        description: 模式描述
+        type: string
+      frequency:
+        description: 出现频率
+        type: string
+      pattern_type:
+        description: 模式类型
+        type: string
+      time_range:
+        allOf:
+        - $ref: '#/definitions/entity.TimeRange'
+        description: 时间范围
+    type: object
+  entity.AIPrediction:
+    properties:
+      confidence:
+        description: 置信度
+        type: number
+      prediction_type:
+        description: 预测类型
+        type: string
+      reason:
+        description: 预测理由
+        type: string
+      time_frame:
+        description: 预测时间范围
+        type: string
+      value:
+        description: 预测值
+        type: string
+    type: object
+  entity.DailyTip:
+    properties:
+      action_url:
+        description: 跳转链接
+        type: string
+      description:
+        description: 描述
+        type: string
+      icon:
+        description: 图标emoji
+        type: string
+      id:
+        type: string
+      priority:
+        description: 优先级
+        type: string
+      title:
+        description: 标题
+        type: string
+      type:
+        description: 类型(feeding/sleep/health)
+        type: string
+    type: object
+  entity.TimeRange:
+    properties:
+      end:
+        type: string
+      start:
+        type: string
+    type: object
+  response.Response:
+    properties:
+      code:
+        type: integer
+      data: {}
+      message:
+        type: string
+      timestamp:
+        type: integer
+    type: object
+  service.AnalysisResponse:
+    properties:
+      analysis_id:
+        type: string
+      created_at:
+        type: string
+      message:
+        type: string
+      result:
+        $ref: '#/definitions/entity.AIAnalysisResult'
+      status:
+        $ref: '#/definitions/entity.AIAnalysisStatus'
+    type: object
+  service.AnalysisStatsResponse:
+    properties:
+      analysis_type_counts:
+        additionalProperties:
+          format: int64
+          type: integer
+        type: object
+      average_score:
+        type: number
+      completed_analyses:
+        type: integer
+      failed_analyses:
+        type: integer
+      recent_analyses:
+        items:
+          $ref: '#/definitions/service.AnalysisResponse'
+        type: array
+      total_analyses:
+        type: integer
+    type: object
+  service.BatchAnalysisResponse:
+    properties:
+      analyses:
+        items:
+          $ref: '#/definitions/service.AnalysisResponse'
+        type: array
+      completed_count:
+        type: integer
+      failed_count:
+        type: integer
+      total_count:
+        type: integer
+    type: object
+  service.CreateAnalysisRequest:
+    properties:
+      analysis_type:
+        $ref: '#/definitions/entity.AIAnalysisType'
+      baby_id:
+        type: integer
+      end_date:
+        type: string
+      options:
+        additionalProperties: true
+        type: object
+      start_date:
+        type: string
+    required:
+    - analysis_type
+    - baby_id
+    - end_date
+    - start_date
+    type: object
+  service.DailyTipsResponse:
+    properties:
+      expired_at:
+        type: string
+      generated_at:
+        type: string
+      tips:
+        items:
+          $ref: '#/definitions/entity.DailyTip'
+        type: array
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: 全栈育儿记录系统 API 文档
+  title: 宝宝喂养日志 API
+  version: "1.0"
+  x-logo:
+    url: https://example.com/logo.png
+paths:
+  /api/ai/analysis:
+    post:
+      consumes:
+      - application/json
+      description: 创建指定类型的AI分析任务
+      parameters:
+      - description: Bearer Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 分析请求
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/service.CreateAnalysisRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/service.AnalysisResponse'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: 创建AI分析任务
+      tags:
+      - AI分析
+  /api/ai/analysis/{id}:
+    get:
+      consumes:
+      - application/json
+      description: 获取指定分析ID的分析结果
+      parameters:
+      - description: Bearer Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 分析ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/service.AnalysisResponse'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/response.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: 获取AI分析结果
+      tags:
+      - AI分析
+  /api/ai/analysis/batch:
+    post:
+      consumes:
+      - application/json
+      description: 对指定时间范围内的宝宝数据进行批量AI分析
+      parameters:
+      - description: Bearer Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 宝宝ID
+        in: query
+        name: baby_id
+        required: true
+        type: integer
+      - description: 开始日期 (YYYY-MM-DD)
+        in: query
+        name: start_date
+        required: true
+        type: string
+      - description: 结束日期 (YYYY-MM-DD)
+        in: query
+        name: end_date
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/service.BatchAnalysisResponse'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: 批量AI分析
+      tags:
+      - AI分析
+  /api/ai/analysis/latest:
+    get:
+      consumes:
+      - application/json
+      description: 获取指定宝宝和类型的最新AI分析结果
+      parameters:
+      - description: Bearer Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 宝宝ID
+        in: query
+        name: baby_id
+        required: true
+        type: integer
+      - description: 分析类型
+        enum:
+        - feeding
+        - sleep
+        - growth
+        - health
+        - behavior
+        in: query
+        name: analysis_type
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/service.AnalysisResponse'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/response.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: 获取最新AI分析结果
+      tags:
+      - AI分析
+  /api/ai/analysis/stats:
+    get:
+      consumes:
+      - application/json
+      description: 获取指定宝宝的AI分析历史统计信息
+      parameters:
+      - description: Bearer Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 宝宝ID
+        in: query
+        name: baby_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/service.AnalysisStatsResponse'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: 获取AI分析统计
+      tags:
+      - AI分析
+  /api/ai/daily-tips:
+    get:
+      consumes:
+      - application/json
+      description: 获取指定宝宝和日期的AI育儿建议
+      parameters:
+      - description: Bearer Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 宝宝ID
+        in: query
+        name: baby_id
+        required: true
+        type: integer
+      - description: 日期 (YYYY-MM-DD)，默认为今天
+        in: query
+        name: date
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/service.DailyTipsResponse'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: 获取每日建议
+      tags:
+      - AI分析
+    post:
+      consumes:
+      - application/json
+      description: 为指定宝宝生成当日的AI育儿建议
+      parameters:
+      - description: Bearer Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 宝宝ID
+        in: query
+        name: baby_id
+        required: true
+        type: integer
+      - description: 日期 (YYYY-MM-DD)，默认为今天
+        in: query
+        name: date
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/service.DailyTipsResponse'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: 生成每日建议
+      tags:
+      - AI分析
+  /api/v1/subscribe/auth:
+    post:
+      consumes:
+      - application/json
+      description: 前端用户授权后,上传授权结果到后端
+      parameters:
+      - description: Bearer token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 授权记录
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.SubscribeAuthRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.SubscribeAuthResponse'
+              type: object
+      summary: 上传订阅授权记录
+      tags:
+      - Subscribe
+  /api/v1/subscribe/cancel:
+    delete:
+      consumes:
+      - application/json
+      description: 用户取消某个类型的订阅消息
+      parameters:
+      - description: Bearer token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 取消订阅请求
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CancelSubscriptionRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: 取消订阅
+      tags:
+      - Subscribe
+  /api/v1/subscribe/logs:
+    get:
+      consumes:
+      - application/json
+      description: 查询用户的消息发送历史记录
+      parameters:
+      - description: Bearer token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - default: 0
+        description: 偏移量
+        in: query
+        name: offset
+        type: integer
+      - default: 20
+        description: 每页数量
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.MessageLogsResponse'
+              type: object
+      summary: 获取消息发送日志
+      tags:
+      - Subscribe
+  /api/v1/subscribe/status:
+    get:
+      consumes:
+      - application/json
+      description: 查询用户所有的订阅消息状态
+      parameters:
+      - description: Bearer token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.SubscribeStatusResponse'
+              type: object
+      summary: 获取用户订阅状态
+      tags:
+      - Subscribe
+  /auth/default-baby:
+    put:
+      responses: {}
+  /auth/refresh-token:
+    post:
+      responses: {}
+  /auth/user-info:
+    get:
+      responses: {}
+    put:
+      responses: {}
+  /auth/wechat-login:
+    post:
+      responses: {}
+  /babies/{babyId}/vaccine-reminders:
+    get:
+      parameters:
+      - description: 宝宝ID
+        in: path
+        name: babyId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dto.VaccineReminderDTO'
+            type: array
+      summary: 获取疫苗提醒列表
+      tags:
+      - 疫苗管理
+  /babies/{babyId}/vaccine-schedules:
+    get:
+      parameters:
+      - description: 宝宝ID
+        in: path
+        name: babyId
+        required: true
+        type: string
+      - description: '状态过滤: pending/completed/skipped'
+        in: query
+        name: status
+        type: string
+      - description: 页码，默认1
+        in: query
+        name: page
+        type: integer
+      - description: 每页数量，默认10，最多100
+        in: query
+        name: pageSize
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dto.VaccineScheduleDTO'
+            type: array
+      summary: 获取疫苗接种日程列表
+      tags:
+      - 疫苗管理
+    post:
+      parameters:
+      - description: 宝宝ID
+        in: path
+        name: babyId
+        required: true
+        type: string
+      - description: 疫苗计划
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CreateVaccineScheduleRequest'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: 创建自定义疫苗计划
+      tags:
+      - 疫苗管理
+  /babies/{babyId}/vaccine-schedules/{scheduleId}:
+    delete:
+      parameters:
+      - description: 宝宝ID
+        in: path
+        name: babyId
+        required: true
+        type: string
+      - description: 日程ID
+        in: path
+        name: scheduleId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: 删除疫苗计划(仅限自定义)
+      tags:
+      - 疫苗管理
+    put:
+      parameters:
+      - description: 宝宝ID
+        in: path
+        name: babyId
+        required: true
+        type: string
+      - description: 日程ID
+        in: path
+        name: scheduleId
+        required: true
+        type: string
+      - description: 接种记录
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UpdateVaccineScheduleRequest'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: 记录疫苗接种
+      tags:
+      - 疫苗管理
+  /babies/{babyId}/vaccine-schedules/{scheduleId}/info:
+    patch:
+      parameters:
+      - description: 宝宝ID
+        in: path
+        name: babyId
+        required: true
+        type: string
+      - description: 日程ID
+        in: path
+        name: scheduleId
+        required: true
+        type: string
+      - description: 更新数据
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UpdateScheduleInfoRequest'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: 更新疫苗接种日程基本信息(仅限未完成的日程)
+      tags:
+      - 疫苗管理
+  /babies/{babyId}/vaccine-statistics:
+    get:
+      description: 获取宝宝的疫苗接种统计数据（纯统计，不包含任何记录列表）
+      parameters:
+      - description: 宝宝ID
+        in: path
+        name: babyId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.VaccineScheduleStatisticsDTO'
+      summary: 获取疫苗接种统计
+      tags:
+      - 疫苗管理
+  /diaper-records:
+    get:
+      responses: {}
+    post:
+      responses: {}
+  /diaper-records/:id:
+    delete:
+      responses: {}
+    get:
+      responses: {}
+    put:
+      responses: {}
+  /feeding-records:
+    get:
+      responses: {}
+    post:
+      responses: {}
+  /feeding-records/:id:
+    delete:
+      responses: {}
+    get:
+      responses: {}
+    put:
+      responses: {}
+  /growth-records:
+    get:
+      responses: {}
+    post:
+      responses: {}
+  /growth-records/:id:
+    delete:
+      responses: {}
+    get:
+      responses: {}
+    put:
+      responses: {}
+  /sleep-records:
+    get:
+      responses: {}
+    post:
+      responses: {}
+  /sleep-records/:id:
+    delete:
+      responses: {}
+    get:
+      responses: {}
+    put:
+      responses: {}
+  /sync:
+    get:
+      responses: {}
+  /timeline:
+    get:
+      responses: {}
+  /upload:
+    post:
+      responses: {}
+  /v1/babies:
+    get:
+      responses: {}
+    post:
+      responses: {}
+  /v1/babies/:babyId:
+    delete:
+      responses: {}
+    get:
+      responses: {}
+    put:
+      responses: {}
+  /v1/babies/:babyId/collaborators:
+    get:
+      responses: {}
+  /v1/babies/:babyId/collaborators/:openid:
+    delete:
+      responses: {}
+  /v1/babies/:babyId/collaborators/:openid/role:
+    put:
+      responses: {}
+  /v1/babies/:babyId/collaborators/invite:
+    post:
+      responses: {}
+  /v1/babies/:babyId/qrcode:
+    get:
+      responses: {}
+  /v1/babies/:babyId/statistics:
+    get:
+      responses: {}
+  /v1/babies/join:
+    post:
+      responses: {}
+  /v1/invitations/code/:shortCode:
+    get:
+      responses: {}
+schemes:
+- http
+- https
+swagger: "2.0"

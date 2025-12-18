@@ -1,0 +1,52 @@
+# Debug配置 - 用于调试DeepSeek JSON解析问题
+# 复制到 config.yaml 或使用 --config=config/debug-config.yaml
+
+# 服务器配置
+server:
+  port: 8080
+  mode: debug
+
+# 日志配置 - 启用DEBUG级别
+log:
+  level: debug  # 改为debug以查看详细日志
+  format: json
+  output: stdout
+
+# 数据库配置
+database:
+  host: localhost
+  port: 5432
+  user: postgres
+  password: password
+  dbname: nutri_baby
+  sslmode: disable
+
+# Redis配置
+redis:
+  addr: localhost:6379
+  password: ""
+  db: 0
+
+# AI配置 - DeepSeek
+ai:
+  provider: deepseek  # 使用deepseek而不是mock
+  deepseek:
+    model: deepseek-chat
+    api_key: "your-deepseek-api-key"  # 请替换为实际的API Key
+    base_url: "https://api.deepseek.com"
+
+# 微信小程序配置
+wechat:
+  app_id: "your-app-id"
+  app_secret: "your-app-secret"
+
+# JWT配置
+jwt:
+  secret: "your-jwt-secret"
+  expire_hours: 24
+
+# 文件上传配置
+upload:
+  max_size: 10485760  # 10MB
+  allowed_types: ["image/jpeg", "image/png", "image/gif"]
+  path: "./uploads"

@@ -1,0 +1,206 @@
+{
+  "easycom": {
+    "autoscan": true,
+    "custom": {
+      "^wd-(.*)": "wot-design-uni/components/wd-$1/wd-$1.vue"
+    }
+  },
+  "pages": [
+    {
+      "path": "pages/index/index",
+      "style": {
+        "navigationBarTitleText": "今日概览",
+        "navigationStyle": "custom",
+        "enablePullDownRefresh": true,
+        "backgroundTextStyle": "dark"
+      }
+    },
+    {
+      "path": "pages/user/login",
+      "style": {
+        "navigationBarTitleText": "登录",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/welcome/welcome",
+      "style": {
+        "navigationBarTitleText": "欢迎",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/baby/list/list",
+      "style": {
+        "navigationBarTitleText": "宝宝管理"
+      }
+    },
+    {
+      "path": "pages/baby/edit/edit",
+      "style": {
+        "navigationBarTitleText": "宝宝信息"
+      }
+    },
+    {
+      "path": "pages/baby/invite/invite",
+      "style": {
+        "navigationBarTitleText": "邀请协作者",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/baby/join/join",
+      "style": {
+        "navigationBarTitleText": "加入协作",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/baby/collaborators/collaborators",
+      "style": {
+        "navigationBarTitleText": "管理协作者",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/record/feeding/feeding",
+      "style": {
+        "navigationBarTitleText": "喂养记录",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/record/feeding/detail",
+      "style": {
+        "navigationBarTitleText": "喂养记录详情",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/record/diaper/diaper",
+      "style": {
+        "navigationBarTitleText": "换尿布",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/record/diaper/detail",
+      "style": {
+        "navigationBarTitleText": "换尿布详情",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/record/sleep/sleep",
+      "style": {
+        "navigationBarTitleText": "睡眠记录",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/record/sleep/detail",
+      "style": {
+        "navigationBarTitleText": "睡眠记录详情",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/record/growth/growth",
+      "style": {
+        "navigationBarTitleText": "成长记录",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/record/growth/detail",
+      "style": {
+        "navigationBarTitleText": "成长记录详情",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/timeline/timeline",
+      "style": {
+        "navigationBarTitleText": "时间轴",
+        "enablePullDownRefresh": true
+      }
+    },
+    {
+      "path": "pages/statistics/statistics",
+      "style": {
+        "navigationBarTitleText": "统计分析"
+      }
+    },
+    {
+      "path": "pages/statistics/ai-analysis",
+      "style": {
+        "navigationBarTitleText": "AI智能分析",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/user/user",
+      "style": {
+        "navigationBarTitleText": "我的"
+      }
+    },
+    {
+      "path": "pages/user/profile/profile",
+      "style": {
+        "navigationBarTitleText": "编辑资料",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/vaccine/vaccine",
+      "style": {
+        "navigationBarTitleText": "疫苗日程",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/settings/subscribe/subscribe",
+      "style": {
+        "navigationBarTitleText": "消息提醒设置"
+      }
+    }
+  ],
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#32dc6e",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "static/tabbar/home.png",
+        "selectedIconPath": "static/tabbar/home-active.png"
+      },
+      {
+        "pagePath": "pages/timeline/timeline",
+        "text": "时间轴",
+        "iconPath": "static/tabbar/timeline.png",
+        "selectedIconPath": "static/tabbar/timeline-active.png"
+      },
+      {
+        "pagePath": "pages/statistics/statistics",
+        "text": "统计",
+        "iconPath": "static/tabbar/statistics.png",
+        "selectedIconPath": "static/tabbar/statistics-active.png"
+      },
+      {
+        "pagePath": "pages/user/user",
+        "text": "我的",
+        "iconPath": "static/tabbar/user.png",
+        "selectedIconPath": "static/tabbar/user-active.png"
+      }
+    ]
+  },
+  "globalStyle": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "宝宝喂养日志",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8"
+  }
+}

@@ -1,0 +1,98 @@
+server:
+  port: 8080
+  mode: debug # debug, release, test
+  read_timeout: 60
+  write_timeout: 60
+  base_url: "https://your-domain.com" # 小程序码和其他资源的完整访问 URL
+
+database:
+  host: localhost
+  port: 5432
+  user: postgres
+  password: "YOUR_DB_PASSWORD"
+  dbname: nutri_baby
+  sslmode: disable
+  timezone: Asia/Shanghai
+  max_open_conns: 100
+  max_idle_conns: 10
+  conn_max_lifetime: 3600
+
+redis:
+  host: localhost
+  port: 6379
+  password: ""
+  db: 0
+  pool_size: 10
+
+jwt:
+  secret: "YOUR_JWT_SECRET_CHANGE_THIS_IN_PRODUCTION"
+  expire_hours: 72
+
+log:
+  level: debug # debug, info, warn, error
+  filename: logs/app.log
+  max_size: 100 # MB
+  max_backups: 3
+  max_age: 28 # days
+  compress: true
+
+upload:
+  max_size: 10485760 # 10MB
+  allowed_types:
+    - image/jpeg
+    - image/png
+    - image/gif
+  storage_path: uploads/
+
+wechat:
+  app_id: "YOUR_WECHAT_APP_ID"
+  app_secret: "YOUR_WECHAT_APP_SECRET"
+  # 订阅消息模板ID配置
+  subscribe_templates:
+    breast_feeding_reminder: "YOUR_TEMPLATE_ID"
+    bottle_feeding_reminder: "YOUR_TEMPLATE_ID"
+    food_feeding_reminder: "YOUR_TEMPLATE_ID"
+    vaccine_reminder: "YOUR_VACCINE_TEMPLATE_ID"
+
+# AI配置
+ai:
+  provider: "mock" # 支持的提供商: openai, claude, ernie, mock, deepseek, gemini
+  openai:
+    api_key: "YOUR_OPENAI_API_KEY"
+    base_url: "https://api.openai.com/v1"
+    model: "gpt-4"
+    max_tokens: 2000
+    temperature: 0.7
+  claude:
+    api_key: "YOUR_CLAUDE_API_KEY"
+    base_url: "https://api.anthropic.com"
+    model: "claude-3-sonnet-20240229"
+    max_tokens: 2000
+    temperature: 0.7
+  ernie:
+    api_key: "YOUR_ERNIE_API_KEY"
+    secret_key: "YOUR_ERNIE_SECRET_KEY"
+    base_url: "https://aip.baidubce.com"
+    model: "ernie-3.5"
+  deepSeek:
+    api_key: "YOUR_DEEPSEEK_API_KEY"
+    base_url: "https://api.deepseek.com"
+    model: "deepseek-chat"
+  gemini:
+    api_key: "YOUR_GEMINI_API_KEY"
+    base_url: "https://gemini-api.example.com"
+    model: "gemini-2.5-flash"
+  # 分析配置
+  analysis:
+    timeout: 30 # 秒
+    retry_count: 3
+    batch_size: 10
+    # 缓存配置
+    cache_ttl: 3600 # 秒 (1小时)
+    # 提示词配置
+    prompts:
+      feeding: "分析以下宝宝的喂养数据，提供专业的营养建议："
+      sleep: "分析以下宝宝的睡眠数据，提供改善建议："
+      growth: "分析以下宝宝的成长数据，评估发育状况："
+      health: "综合分析以下宝宝的健康数据："
+      behavior: "分析以下宝宝的行为模式："

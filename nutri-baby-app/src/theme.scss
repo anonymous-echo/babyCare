@@ -1,0 +1,34 @@
+/**
+ * Wot Design Uni 全局主题配置
+ *
+ * 通过覆盖 Wot UI 的 CSS 变量来自定义主题
+ * 文档: https://wot-ui.cn/component/config-provider.html
+ */
+
+/* 覆盖 Wot UI 默认主题色 - 母婴APP风格（温暖玫粉） */
+page {
+  /* 主题色：温暖玫粉 */
+  --wot-color-theme: #32dc6e;
+
+  /* 按钮 */
+  --wd-button-primary-bg: #32dc6e;
+  --wd-button-primary-color: #ffffff;
+
+  /* 其他使用主题色的组件 */
+  --wd-color-primary: #32dc6e;
+
+  /* Radio 单选框 */
+  --wd-radio-checked-color: #32dc6e;
+
+  /* Checkbox 复选框 */
+  --wd-checkbox-checked-color: #32dc6e;
+
+  /* Switch 开关 */
+  --wd-switch-on-color: #32dc6e;
+
+  /* Tabs 标签页 */
+  --wd-tabs-line-color: #32dc6e;
+
+  /* Picker 选择器 */
+  --wd-picker-title-color: #32dc6e;
+}

@@ -1,0 +1,109 @@
+/**
+ * 统一配色系统
+ * 母婴APP设计规范 - 柔和温暖风格
+ */
+
+// ===== 品牌色系 =====
+// 主色：清爽绿 (用于主要操作、按钮、强调)
+$color-primary: #32dc6e;
+$color-primary-light: #7dd3a2;
+$color-primary-lighter: #e8f7f0;
+
+// 次级色：柔和天蓝 (用于辅助操作、信息提示)
+$color-secondary: #5dade2;
+$color-secondary-light: #a8d8f0;
+$color-secondary-lighter: #e8f4f9;
+
+// ===== 状态色系 =====
+// 警示色：温和红 (用于危险操作、删除)
+$color-danger: #ff6b6b;
+$color-danger-light: #ffe0e0;
+
+// 警告色：温暖橙 (用于警告提示)
+$color-warning: #ffa500;
+$color-warning-light: #fff4e6;
+
+// 成功色：绿色
+$color-success: #32dc6e;
+$color-success-light: #e8f7f0;
+
+// ===== 中性色系 =====
+// 文字色
+$color-text-primary: #2c3e50;      // 主文本 (深灰)
+$color-text-secondary: #7f8c8d;    // 辅助文本 (中灰)
+$color-text-tertiary: #bdc3c7;     // 弱化文本 (浅灰)
+$color-text-disabled: #e0e0e0;     // 禁用文本 (极浅灰)
+
+// 背景色
+$color-bg-primary: #ffffff;        // 主背景 (白色)
+$color-bg-secondary: #f6f8f7;      // 次级背景 (淡绿灰)
+$color-bg-tertiary: #f8f9fa;       // 第三级背景 (淡蓝灰)
+$color-bg-disabled: #f5f5f5;       // 禁用背景 (浅灰)
+
+// 边框色
+$color-border-primary: #cae3d4;    // 主边框 (淡绿)
+$color-border-secondary: #e8eef5;  // 次级边框 (淡蓝)
+$color-border-light: #f0f0f0;      // 浅边框 (极浅灰)
+
+// 分割线色
+$color-divider: #e0e0e0;           // 分割线 (浅灰)
+
+// ===== 阴影系统 =====
+$shadow-sm: 0 2rpx 8rpx rgba(0, 0, 0, 0.06);
+$shadow-md: 0 4rpx 16rpx rgba(0, 0, 0, 0.08);
+$shadow-lg: 0 8rpx 24rpx rgba(0, 0, 0, 0.12);
+
+// 绿色阴影 (配合主色使用)
+$shadow-primary-sm: 0 2rpx 8rpx rgba(50, 220, 110, 0.15);
+$shadow-primary-md: 0 4rpx 16rpx rgba(50, 220, 110, 0.2);
+
+// ===== 圆角系统 =====
+$radius-xs: 4rpx;
+$radius-sm: 8rpx;
+$radius-md: 12rpx;
+$radius-lg: 16rpx;
+$radius-xl: 20rpx;
+$radius-full: 50%;
+
+// ===== 间距系统 =====
+$spacing-xs: 4rpx;
+$spacing-sm: 8rpx;
+$spacing-md: 12rpx;
+$spacing-lg: 16rpx;
+$spacing-xl: 20rpx;
+$spacing-2xl: 24rpx;
+$spacing-3xl: 32rpx;
+
+// ===== 字体大小 =====
+$font-size-xs: 20rpx;
+$font-size-sm: 22rpx;
+$font-size-base: 24rpx;
+$font-size-md: 26rpx;
+$font-size-lg: 28rpx;
+$font-size-xl: 32rpx;
+$font-size-2xl: 34rpx;
+$font-size-3xl: 36rpx;
+
+// ===== 字体权重 =====
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+
+// ===== 过渡动画 =====
+$transition-fast: 0.15s ease;
+$transition-base: 0.2s ease;
+$transition-slow: 0.3s ease;
+
+// ===== 渐变色 =====
+// 主色渐变
+$gradient-primary: linear-gradient(135deg, #32dc6e 0%, #7ae88f 100%);
+
+// 绿蓝渐变 (用于卡片背景)
+$gradient-primary-secondary: linear-gradient(135deg, #32dc6e 0%, #5dade2 100%);
+
+// 浅色渐变背景 (用于页面背景)
+$gradient-bg-light: linear-gradient(180deg, #f8f9fa 0%, #f6f8f7 100%);
+
+// ===== 导出所有色变量供 Wot UI 使用 =====
+// (这些会在 vue 文件中通过 :style 动态引用)

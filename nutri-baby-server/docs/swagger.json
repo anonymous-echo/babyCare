@@ -1,0 +1,1920 @@
+{
+    "schemes": [
+        "http",
+        "https"
+    ],
+    "swagger": "2.0",
+    "info": {
+        "description": "全栈育儿记录系统 API 文档",
+        "title": "宝宝喂养日志 API",
+        "contact": {},
+        "version": "3.3.0",
+        "x-logo": {
+            "url": "https://example.com/logo.png"
+        }
+    },
+    "host": "localhost:8080",
+    "basePath": "/",
+    "paths": {
+        "/api/ai/analysis": {
+            "post": {
+                "description": "创建指定类型的AI分析任务",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "AI分析"
+                ],
+                "summary": "创建AI分析任务",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "分析请求",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/service.CreateAnalysisRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/service.AnalysisResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/ai/analysis/batch": {
+            "post": {
+                "description": "对指定时间范围内的宝宝数据进行批量AI分析",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "AI分析"
+                ],
+                "summary": "批量AI分析",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "宝宝ID",
+                        "name": "baby_id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "开始日期 (YYYY-MM-DD)",
+                        "name": "start_date",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "结束日期 (YYYY-MM-DD)",
+                        "name": "end_date",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/service.BatchAnalysisResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/ai/analysis/latest": {
+            "get": {
+                "description": "获取指定宝宝和类型的最新AI分析结果",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "AI分析"
+                ],
+                "summary": "获取最新AI分析结果",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "宝宝ID",
+                        "name": "baby_id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "enum": [
+                            "feeding",
+                            "sleep",
+                            "growth",
+                            "health",
+                            "behavior"
+                        ],
+                        "type": "string",
+                        "description": "分析类型",
+                        "name": "analysis_type",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/service.AnalysisResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/ai/analysis/stats": {
+            "get": {
+                "description": "获取指定宝宝的AI分析历史统计信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "AI分析"
+                ],
+                "summary": "获取AI分析统计",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "宝宝ID",
+                        "name": "baby_id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/service.AnalysisStatsResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/ai/analysis/{id}": {
+            "get": {
+                "description": "获取指定分析ID的分析结果",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "AI分析"
+                ],
+                "summary": "获取AI分析结果",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "分析ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/service.AnalysisResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/ai/daily-tips": {
+            "get": {
+                "description": "获取指定宝宝和日期的AI育儿建议",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "AI分析"
+                ],
+                "summary": "获取每日建议",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "宝宝ID",
+                        "name": "baby_id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "日期 (YYYY-MM-DD)，默认为今天",
+                        "name": "date",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/service.DailyTipsResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "为指定宝宝生成当日的AI育儿建议",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "AI分析"
+                ],
+                "summary": "生成每日建议",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "宝宝ID",
+                        "name": "baby_id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "日期 (YYYY-MM-DD)，默认为今天",
+                        "name": "date",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/service.DailyTipsResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/subscribe/auth": {
+            "post": {
+                "description": "前端用户授权后,上传授权结果到后端",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Subscribe"
+                ],
+                "summary": "上传订阅授权记录",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "授权记录",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.SubscribeAuthRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/dto.SubscribeAuthResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/subscribe/cancel": {
+            "delete": {
+                "description": "用户取消某个类型的订阅消息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Subscribe"
+                ],
+                "summary": "取消订阅",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "取消订阅请求",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.CancelSubscriptionRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/subscribe/logs": {
+            "get": {
+                "description": "查询用户的消息发送历史记录",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Subscribe"
+                ],
+                "summary": "获取消息发送日志",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "default": 0,
+                        "description": "偏移量",
+                        "name": "offset",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "default": 20,
+                        "description": "每页数量",
+                        "name": "limit",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/dto.MessageLogsResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/subscribe/status": {
+            "get": {
+                "description": "查询用户所有的订阅消息状态",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Subscribe"
+                ],
+                "summary": "获取用户订阅状态",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/dto.SubscribeStatusResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/default-baby": {
+            "put": {
+                "responses": {}
+            }
+        },
+        "/auth/refresh-token": {
+            "post": {
+                "responses": {}
+            }
+        },
+        "/auth/user-info": {
+            "get": {
+                "responses": {}
+            },
+            "put": {
+                "responses": {}
+            }
+        },
+        "/auth/wechat-login": {
+            "post": {
+                "responses": {}
+            }
+        },
+        "/babies/{babyId}/vaccine-reminders": {
+            "get": {
+                "tags": [
+                    "疫苗管理"
+                ],
+                "summary": "获取疫苗提醒列表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "宝宝ID",
+                        "name": "babyId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/dto.VaccineReminderDTO"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/babies/{babyId}/vaccine-schedules": {
+            "get": {
+                "tags": [
+                    "疫苗管理"
+                ],
+                "summary": "获取疫苗接种日程列表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "宝宝ID",
+                        "name": "babyId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "状态过滤: pending/completed/skipped",
+                        "name": "status",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "页码，默认1",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "每页数量，默认10，最多100",
+                        "name": "pageSize",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/dto.VaccineScheduleDTO"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "疫苗管理"
+                ],
+                "summary": "创建自定义疫苗计划",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "宝宝ID",
+                        "name": "babyId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "疫苗计划",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.CreateVaccineScheduleRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/babies/{babyId}/vaccine-schedules/{scheduleId}": {
+            "put": {
+                "tags": [
+                    "疫苗管理"
+                ],
+                "summary": "记录疫苗接种",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "宝宝ID",
+                        "name": "babyId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "日程ID",
+                        "name": "scheduleId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "接种记录",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.UpdateVaccineScheduleRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "疫苗管理"
+                ],
+                "summary": "删除疫苗计划(仅限自定义)",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "宝宝ID",
+                        "name": "babyId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "日程ID",
+                        "name": "scheduleId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/babies/{babyId}/vaccine-schedules/{scheduleId}/info": {
+            "patch": {
+                "tags": [
+                    "疫苗管理"
+                ],
+                "summary": "更新疫苗接种日程基本信息(仅限未完成的日程)",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "宝宝ID",
+                        "name": "babyId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "日程ID",
+                        "name": "scheduleId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "更新数据",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.UpdateScheduleInfoRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/babies/{babyId}/vaccine-statistics": {
+            "get": {
+                "description": "获取宝宝的疫苗接种统计数据（纯统计，不包含任何记录列表）",
+                "tags": [
+                    "疫苗管理"
+                ],
+                "summary": "获取疫苗接种统计",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "宝宝ID",
+                        "name": "babyId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.VaccineScheduleStatisticsDTO"
+                        }
+                    }
+                }
+            }
+        },
+        "/diaper-records": {
+            "get": {
+                "responses": {}
+            },
+            "post": {
+                "responses": {}
+            }
+        },
+        "/diaper-records/:id": {
+            "get": {
+                "responses": {}
+            },
+            "put": {
+                "responses": {}
+            },
+            "delete": {
+                "responses": {}
+            }
+        },
+        "/feeding-records": {
+            "get": {
+                "responses": {}
+            },
+            "post": {
+                "responses": {}
+            }
+        },
+        "/feeding-records/:id": {
+            "get": {
+                "responses": {}
+            },
+            "put": {
+                "responses": {}
+            },
+            "delete": {
+                "responses": {}
+            }
+        },
+        "/growth-records": {
+            "get": {
+                "responses": {}
+            },
+            "post": {
+                "responses": {}
+            }
+        },
+        "/growth-records/:id": {
+            "get": {
+                "responses": {}
+            },
+            "put": {
+                "responses": {}
+            },
+            "delete": {
+                "responses": {}
+            }
+        },
+        "/sleep-records": {
+            "get": {
+                "responses": {}
+            },
+            "post": {
+                "responses": {}
+            }
+        },
+        "/sleep-records/:id": {
+            "get": {
+                "responses": {}
+            },
+            "put": {
+                "responses": {}
+            },
+            "delete": {
+                "responses": {}
+            }
+        },
+        "/sync": {
+            "get": {
+                "responses": {}
+            }
+        },
+        "/timeline": {
+            "get": {
+                "responses": {}
+            }
+        },
+        "/upload": {
+            "post": {
+                "responses": {}
+            }
+        },
+        "/v1/babies": {
+            "get": {
+                "responses": {}
+            },
+            "post": {
+                "responses": {}
+            }
+        },
+        "/v1/babies/:babyId": {
+            "get": {
+                "responses": {}
+            },
+            "put": {
+                "responses": {}
+            },
+            "delete": {
+                "responses": {}
+            }
+        },
+        "/v1/babies/:babyId/collaborators": {
+            "get": {
+                "responses": {}
+            }
+        },
+        "/v1/babies/:babyId/collaborators/:openid": {
+            "delete": {
+                "responses": {}
+            }
+        },
+        "/v1/babies/:babyId/collaborators/:openid/role": {
+            "put": {
+                "responses": {}
+            }
+        },
+        "/v1/babies/:babyId/collaborators/invite": {
+            "post": {
+                "responses": {}
+            }
+        },
+        "/v1/babies/:babyId/qrcode": {
+            "get": {
+                "responses": {}
+            }
+        },
+        "/v1/babies/:babyId/statistics": {
+            "get": {
+                "responses": {}
+            }
+        },
+        "/v1/babies/join": {
+            "post": {
+                "responses": {}
+            }
+        },
+        "/v1/invitations/code/:shortCode": {
+            "get": {
+                "responses": {}
+            }
+        }
+    },
+    "definitions": {
+        "dto.CancelSubscriptionRequest": {
+            "type": "object",
+            "required": [
+                "templateType"
+            ],
+            "properties": {
+                "templateType": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.CreateVaccineScheduleRequest": {
+            "type": "object",
+            "required": [
+                "ageInMonths",
+                "doseNumber",
+                "vaccineName",
+                "vaccineType"
+            ],
+            "properties": {
+                "ageInMonths": {
+                    "type": "integer"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "doseNumber": {
+                    "type": "integer"
+                },
+                "isRequired": {
+                    "type": "boolean"
+                },
+                "reminderDays": {
+                    "type": "integer"
+                },
+                "templateId": {
+                    "description": "可选:基于模板创建",
+                    "type": "string"
+                },
+                "vaccineName": {
+                    "type": "string"
+                },
+                "vaccineType": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.MessageLogItem": {
+            "type": "object",
+            "properties": {
+                "createdAt": {
+                    "type": "integer"
+                },
+                "errmsg": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "sendStatus": {
+                    "type": "string"
+                },
+                "sendTime": {
+                    "type": "integer"
+                },
+                "templateType": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.MessageLogsResponse": {
+            "type": "object",
+            "properties": {
+                "logs": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.MessageLogItem"
+                    }
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        },
+        "dto.SubscribeAuthDTO": {
+            "type": "object",
+            "required": [
+                "status",
+                "templateId",
+                "templateType"
+            ],
+            "properties": {
+                "status": {
+                    "type": "string",
+                    "enum": [
+                        "accept",
+                        "reject"
+                    ]
+                },
+                "templateId": {
+                    "type": "string"
+                },
+                "templateType": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.SubscribeAuthRequest": {
+            "type": "object",
+            "required": [
+                "records"
+            ],
+            "properties": {
+                "records": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                        "$ref": "#/definitions/dto.SubscribeAuthDTO"
+                    }
+                }
+            }
+        },
+        "dto.SubscribeAuthResponse": {
+            "type": "object",
+            "properties": {
+                "failedCount": {
+                    "type": "integer"
+                },
+                "successCount": {
+                    "type": "integer"
+                }
+            }
+        },
+        "dto.SubscribeStatusResponse": {
+            "type": "object",
+            "properties": {
+                "subscriptions": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.SubscriptionItem"
+                    }
+                }
+            }
+        },
+        "dto.SubscriptionItem": {
+            "type": "object",
+            "properties": {
+                "expireTime": {
+                    "type": "integer"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "subscribeTime": {
+                    "type": "integer"
+                },
+                "templateId": {
+                    "type": "string"
+                },
+                "templateType": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.UpdateScheduleInfoRequest": {
+            "type": "object",
+            "properties": {
+                "ageInMonths": {
+                    "description": "接种月龄",
+                    "type": "integer"
+                },
+                "description": {
+                    "description": "描述",
+                    "type": "string"
+                },
+                "doseNumber": {
+                    "description": "剂次",
+                    "type": "integer"
+                },
+                "isRequired": {
+                    "description": "是否必打",
+                    "type": "boolean"
+                },
+                "reminderDays": {
+                    "description": "提醒天数",
+                    "type": "integer"
+                },
+                "vaccineName": {
+                    "description": "疫苗名称",
+                    "type": "string"
+                },
+                "vaccineType": {
+                    "description": "疫苗类型",
+                    "type": "string"
+                }
+            }
+        },
+        "dto.UpdateVaccineScheduleRequest": {
+            "type": "object",
+            "properties": {
+                "batchNumber": {
+                    "description": "批号(可选)",
+                    "type": "string"
+                },
+                "doctor": {
+                    "description": "医生(可选)",
+                    "type": "string"
+                },
+                "hospital": {
+                    "description": "接种医院",
+                    "type": "string"
+                },
+                "note": {
+                    "description": "备注(可选)",
+                    "type": "string"
+                },
+                "reaction": {
+                    "description": "不良反应(可选)",
+                    "type": "string"
+                },
+                "vaccinationStatus": {
+                    "description": "pending, completed, skipped",
+                    "type": "string"
+                },
+                "vaccineDate": {
+                    "description": "接种日期",
+                    "type": "integer"
+                }
+            }
+        },
+        "dto.VaccineReminderDTO": {
+            "type": "object",
+            "properties": {
+                "babyId": {
+                    "type": "string"
+                },
+                "babyName": {
+                    "type": "string"
+                },
+                "createTime": {
+                    "type": "integer"
+                },
+                "daysUntilDue": {
+                    "type": "integer"
+                },
+                "doseNumber": {
+                    "type": "integer"
+                },
+                "planId": {
+                    "type": "string"
+                },
+                "reminderId": {
+                    "type": "string"
+                },
+                "reminderSent": {
+                    "type": "boolean"
+                },
+                "scheduledDate": {
+                    "type": "integer"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "vaccineName": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.VaccineScheduleDTO": {
+            "type": "object",
+            "properties": {
+                "ageInMonths": {
+                    "type": "integer"
+                },
+                "babyId": {
+                    "type": "string"
+                },
+                "batchNumber": {
+                    "type": "string"
+                },
+                "completedBy": {
+                    "type": "string"
+                },
+                "completedByAvatar": {
+                    "type": "string"
+                },
+                "completedByName": {
+                    "type": "string"
+                },
+                "completedTime": {
+                    "type": "integer"
+                },
+                "createBy": {
+                    "type": "string"
+                },
+                "createTime": {
+                    "type": "integer"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "doctor": {
+                    "type": "string"
+                },
+                "doseNumber": {
+                    "type": "integer"
+                },
+                "hospital": {
+                    "type": "string"
+                },
+                "isCustom": {
+                    "type": "boolean"
+                },
+                "isRequired": {
+                    "type": "boolean"
+                },
+                "note": {
+                    "type": "string"
+                },
+                "reaction": {
+                    "type": "string"
+                },
+                "reminderDays": {
+                    "type": "integer"
+                },
+                "scheduleId": {
+                    "type": "string"
+                },
+                "templateId": {
+                    "type": "string"
+                },
+                "vaccinationStatus": {
+                    "description": "pending, completed, skipped",
+                    "type": "string"
+                },
+                "vaccineDate": {
+                    "description": "接种记录信息(仅在 status='completed' 时有值)",
+                    "type": "integer"
+                },
+                "vaccineName": {
+                    "type": "string"
+                },
+                "vaccineType": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.VaccineScheduleStatisticsDTO": {
+            "type": "object",
+            "properties": {
+                "completed": {
+                    "type": "integer"
+                },
+                "completionRate": {
+                    "type": "integer"
+                },
+                "pending": {
+                    "type": "integer"
+                },
+                "skipped": {
+                    "type": "integer"
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        },
+        "entity.AIAlert": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "description": "描述",
+                    "type": "string"
+                },
+                "level": {
+                    "description": "警告级别(critical/warning/info)",
+                    "type": "string"
+                },
+                "suggestion": {
+                    "description": "建议",
+                    "type": "string"
+                },
+                "timestamp": {
+                    "description": "时间戳",
+                    "type": "string"
+                },
+                "title": {
+                    "description": "标题",
+                    "type": "string"
+                },
+                "type": {
+                    "description": "警告类型",
+                    "type": "string"
+                }
+            }
+        },
+        "entity.AIAnalysisResult": {
+            "type": "object",
+            "properties": {
+                "alerts": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/entity.AIAlert"
+                    }
+                },
+                "analysis_id": {
+                    "type": "integer"
+                },
+                "analysis_type": {
+                    "$ref": "#/definitions/entity.AIAnalysisType"
+                },
+                "baby_id": {
+                    "type": "integer"
+                },
+                "insights": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/entity.AIInsight"
+                    }
+                },
+                "metadata": {
+                    "type": "object",
+                    "additionalProperties": true
+                },
+                "patterns": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/entity.AIPattern"
+                    }
+                },
+                "predictions": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/entity.AIPrediction"
+                    }
+                },
+                "score": {
+                    "type": "number"
+                }
+            }
+        },
+        "entity.AIAnalysisStatus": {
+            "type": "string",
+            "enum": [
+                "pending",
+                "analyzing",
+                "completed",
+                "failed"
+            ],
+            "x-enum-comments": {
+                "AIAnalysisStatusAnalyzing": "分析中",
+                "AIAnalysisStatusCompleted": "已完成",
+                "AIAnalysisStatusFailed": "分析失败",
+                "AIAnalysisStatusPending": "待分析"
+            },
+            "x-enum-descriptions": [
+                "待分析",
+                "分析中",
+                "已完成",
+                "分析失败"
+            ],
+            "x-enum-varnames": [
+                "AIAnalysisStatusPending",
+                "AIAnalysisStatusAnalyzing",
+                "AIAnalysisStatusCompleted",
+                "AIAnalysisStatusFailed"
+            ]
+        },
+        "entity.AIAnalysisType": {
+            "type": "string",
+            "enum": [
+                "feeding",
+                "sleep",
+                "growth",
+                "health",
+                "behavior"
+            ],
+            "x-enum-comments": {
+                "AIAnalysisTypeBehavior": "行为分析",
+                "AIAnalysisTypeFeeding": "喂养分析",
+                "AIAnalysisTypeGrowth": "成长分析",
+                "AIAnalysisTypeHealth": "健康分析",
+                "AIAnalysisTypeSleep": "睡眠分析"
+            },
+            "x-enum-descriptions": [
+                "喂养分析",
+                "睡眠分析",
+                "成长分析",
+                "健康分析",
+                "行为分析"
+            ],
+            "x-enum-varnames": [
+                "AIAnalysisTypeFeeding",
+                "AIAnalysisTypeSleep",
+                "AIAnalysisTypeGrowth",
+                "AIAnalysisTypeHealth",
+                "AIAnalysisTypeBehavior"
+            ]
+        },
+        "entity.AIInsight": {
+            "type": "object",
+            "properties": {
+                "category": {
+                    "description": "分类",
+                    "type": "string"
+                },
+                "description": {
+                    "description": "详细描述",
+                    "type": "string"
+                },
+                "priority": {
+                    "description": "优先级(high/medium/low)",
+                    "type": "string"
+                },
+                "title": {
+                    "description": "标题",
+                    "type": "string"
+                },
+                "type": {
+                    "description": "insight类型",
+                    "type": "string"
+                }
+            }
+        },
+        "entity.AIPattern": {
+            "type": "object",
+            "properties": {
+                "confidence": {
+                    "description": "置信度(0-1)",
+                    "type": "number"
+                },
+                "description": {
+                    "description": "模式描述",
+                    "type": "string"
+                },
+                "frequency": {
+                    "description": "出现频率",
+                    "type": "string"
+                },
+                "pattern_type": {
+                    "description": "模式类型",
+                    "type": "string"
+                },
+                "time_range": {
+                    "description": "时间范围",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/entity.TimeRange"
+                        }
+                    ]
+                }
+            }
+        },
+        "entity.AIPrediction": {
+            "type": "object",
+            "properties": {
+                "confidence": {
+                    "description": "置信度",
+                    "type": "number"
+                },
+                "prediction_type": {
+                    "description": "预测类型",
+                    "type": "string"
+                },
+                "reason": {
+                    "description": "预测理由",
+                    "type": "string"
+                },
+                "time_frame": {
+                    "description": "预测时间范围",
+                    "type": "string"
+                },
+                "value": {
+                    "description": "预测值",
+                    "type": "string"
+                }
+            }
+        },
+        "entity.DailyTip": {
+            "type": "object",
+            "properties": {
+                "action_url": {
+                    "description": "跳转链接",
+                    "type": "string"
+                },
+                "description": {
+                    "description": "描述",
+                    "type": "string"
+                },
+                "icon": {
+                    "description": "图标emoji",
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "priority": {
+                    "description": "优先级",
+                    "type": "string"
+                },
+                "title": {
+                    "description": "标题",
+                    "type": "string"
+                },
+                "type": {
+                    "description": "类型(feeding/sleep/health)",
+                    "type": "string"
+                }
+            }
+        },
+        "entity.TimeRange": {
+            "type": "object",
+            "properties": {
+                "end": {
+                    "type": "string"
+                },
+                "start": {
+                    "type": "string"
+                }
+            }
+        },
+        "response.Response": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "data": {},
+                "message": {
+                    "type": "string"
+                },
+                "timestamp": {
+                    "type": "integer"
+                }
+            }
+        },
+        "service.AnalysisResponse": {
+            "type": "object",
+            "properties": {
+                "analysis_id": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "result": {
+                    "$ref": "#/definitions/entity.AIAnalysisResult"
+                },
+                "status": {
+                    "$ref": "#/definitions/entity.AIAnalysisStatus"
+                }
+            }
+        },
+        "service.AnalysisStatsResponse": {
+            "type": "object",
+            "properties": {
+                "analysis_type_counts": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                },
+                "average_score": {
+                    "type": "number"
+                },
+                "completed_analyses": {
+                    "type": "integer"
+                },
+                "failed_analyses": {
+                    "type": "integer"
+                },
+                "recent_analyses": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/service.AnalysisResponse"
+                    }
+                },
+                "total_analyses": {
+                    "type": "integer"
+                }
+            }
+        },
+        "service.BatchAnalysisResponse": {
+            "type": "object",
+            "properties": {
+                "analyses": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/service.AnalysisResponse"
+                    }
+                },
+                "completed_count": {
+                    "type": "integer"
+                },
+                "failed_count": {
+                    "type": "integer"
+                },
+                "total_count": {
+                    "type": "integer"
+                }
+            }
+        },
+        "service.CreateAnalysisRequest": {
+            "type": "object",
+            "required": [
+                "analysis_type",
+                "baby_id",
+                "end_date",
+                "start_date"
+            ],
+            "properties": {
+                "analysis_type": {
+                    "$ref": "#/definitions/entity.AIAnalysisType"
+                },
+                "baby_id": {
+                    "type": "integer"
+                },
+                "end_date": {
+                    "type": "string"
+                },
+                "options": {
+                    "type": "object",
+                    "additionalProperties": true
+                },
+                "start_date": {
+                    "type": "string"
+                }
+            }
+        },
+        "service.DailyTipsResponse": {
+            "type": "object",
+            "properties": {
+                "expired_at": {
+                    "type": "string"
+                },
+                "generated_at": {
+                    "type": "string"
+                },
+                "tips": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/entity.DailyTip"
+                    }
+                }
+            }
+        }
+    }
+}

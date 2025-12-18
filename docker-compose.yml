@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+  frontend:
+    build: 
+      context: ./nutri-baby-app
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - nutri-baby-server
+    networks:
+      - nutri-baby-network
+
+  nutri-baby-server:
+    build: 
+      context: ./nutri-baby-server
+      dockerfile: Dockerfile
+    volumes:
+      - ./nutri-baby-server/config:/app/config
+      - ./nutri-baby-server/logs:/app/logs
+      - ./nutri-baby-server/uploads:/app/uploads
+    depends_on:
+      - postgres
+      - redis
+    environment:
+      - TZ=Asia/Shanghai
+    networks:
+      - nutri-baby-network
+      
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: YOUR_DB_PASSWORD
+      POSTGRES_DB: nutri_baby
+      TZ: Asia/Shanghai
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - nutri-baby-network
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - nutri-baby-network
+    environment:
+      - TZ=Asia/Shanghai
+
+networks:
+  nutri-baby-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  redis_data:

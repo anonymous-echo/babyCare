@@ -1,0 +1,75 @@
+/.bmad-core/
+/.claude/
+/.vscode/
+/.hbuilderx/
+/.kiro/
+/.spec-workflow/
+/home.html
+/prd.md
+/关系模型分析.md
+/去家庭化架构实施总结-HTTP层.md
+/去家庭化架构方案.md
+/完全移除Family架构总结.md
+/实施总结.md
+/邀请系统前端集成总结.md
+/邀请系统重构-完整实施总结.md
+/邀请系统重构-微信分享与二维码.md
+/nutri-baby-app/node_modules
+/nutri-baby-app/dist
+/nutri-baby-server/PROJECT_SUMMARY.md
+/nutri-baby-server/logs/
+/nutri-baby-server/uploads/
+/nutri-baby-server/server
+/nutri-baby-server/wire/wire_gen.go.DS_Store
+/nutri-baby-server/wire/wire_gen.go
+.idea/git_toolbox_prj.xml
+.idea/GitLink.xml
+.idea/json_assistant_history.xml
+.idea/nutri-baby.iml
+.idea/vcs.xml
+.idea/workspace.xml
+.idea/httpRequests/http-client.cookies
+.idea/httpRequests/http-requests-log.http
+nutri-baby-server/.DS_Store
+.DS_Store
+BACKEND_CONFIG_REFACTOR.md
+DIAGNOSE.md
+diagnostic.js
+VSCODE_RUN_CONFIG_GUIDE.md
+.idea/.gitignore
+nutri-baby-server/MAKEFILE_UPDATE.md
+/.mcp.json
+/.idea/.name
+/nutri-baby-server/cmd/server/__debug_*
+/nutri-baby-server/bin/server
+/nutri-baby-server/bin/server-linux-amd64
+BUGFIX_REPORT.md
+UPLOAD_FEATURE.md
+# IDE配置
+.idea/
+*.iml
+
+# 构建输出
+nutri-baby-server/nutri-baby-server
+nutri-baby-server/bin/
+nutri-baby-server/cmd/server/__debug_*
+
+# 临时文件
+.DS_Store
+*.log
+
+# 前端spec-workflow配置
+nutri-baby-app/.spec-workflow/
+/nutri-baby-server/.spec-workflow/
+
+# 配置文件（包含敏感信息）
+# 以下文件包含数据库密码、API密钥等敏感信息，不应提交到版本控制
+# 使用 .example 文件作为模板
+nutri-baby-server/config/config.yaml
+nutri-baby-app/.env.development
+nutri-baby-app/.env.production
+# 但允许提交模板文件
+!nutri-baby-server/config/*.example
+!nutri-baby-app/.env.*.example
+/SECURITY_CLEANUP.md
+/SET_UP_CONFIG.md
