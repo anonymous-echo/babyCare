@@ -180,7 +180,7 @@ func Load(configPath string) (*Config, error) {
 
 	// 2. 设置 Viper 基础规则
 	v := viper.GetViper()
-	v.SetEnvPrefix("NB") // 关键：使用 NB_ 前缀隔离系统变量
+	v.SetEnvPrefix("") // 移除 NB_ 前缀，回归标准环境变量名以匹配用户现有云端配置
 	v.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
 	v.AutomaticEnv()
 	v.SetConfigType("yaml")
@@ -213,10 +213,9 @@ func Load(configPath string) (*Config, error) {
 		return nil, fmt.Errorf("failed to unmarshal config: %w", err)
 	}
 
-	// 6. 云端环境自检：如果 host 依然是 localhost，打印诊断信息
-	if defaultCfg.Database.Host == "localhost" {
-		fmt.Printf("DEBUG: Database Host is still localhost! Check prefix NB_DATABASE_HOST\n")
-		fmt.Printf("ENV TEST (NB_DATABASE_USER): %s\n", v.GetString("database.user"))
+	// 6. 最终检查：如果数据库主机为空，说明映射完全失败
+	if defaultCfg.Database.Host == "" {
+		return nil, fmt.Errorf("critical error: database host is empty. please check your config file or environment variables")
 	}
 
 	return defaultCfg, nil
@@ -274,7 +273,7 @@ func GetDefaultConfig() *Config {
 			BaseURL:      "http://localhost:8080",
 		},
 		Database: DatabaseConfig{
-			Host:              "localhost",
+			Host:              "", // 初始置空，强制要求外部提供配置
 			Port:              5432,
 			User:              "postgres",
 			Password:          "",
