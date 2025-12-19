@@ -56,7 +56,7 @@ func (d DatabaseConfig) DSN() string {
 		Scheme: "postgres",
 		User:   url.UserPassword(d.User, d.Password),
 		Host:   fmt.Sprintf("%s:%d", d.Host, d.Port),
-		Path:   d.DBName,
+		Path:   "/" + d.DBName,
 	}
 
 	q := u.Query()
