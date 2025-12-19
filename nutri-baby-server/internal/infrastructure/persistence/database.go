@@ -11,6 +11,7 @@ import (
 	"github.com/wxlbd/nutri-baby-server/internal/domain/entity"
 	"github.com/wxlbd/nutri-baby-server/internal/infrastructure/config"
 	"github.com/wxlbd/nutri-baby-server/internal/infrastructure/logger"
+	"go.uber.org/zap"
 )
 
 // NewDatabase 创建数据库连接
