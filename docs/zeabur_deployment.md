@@ -33,6 +33,7 @@ Zeabur 是一个简单易用的云部署平台，支持全自动部署后端、�
     - `DB_NAME`: `nutri_baby`。
     - `REDIS_HOST`: Redis 的 Host。
     - `REDIS_PORT`: `6379`。
+    - `PORT`: `80`。
     - `JWT_SECRET`: 随机字符串。
     - `GIN_MODE`: `release`。
 6. 在 **Domain** 标签页点击 **Generate Domain**。

@@ -42,10 +42,10 @@ COPY --from=backend-builder /app/config ./config
 COPY --from=frontend-builder /app/dist/build/h5 ./dist
 
 # 设置默认环境变量
-ENV PORT=8080
+ENV PORT=80
 ENV GIN_MODE=release
 
-EXPOSE 8080
+EXPOSE 80
 
 # 运行服务
 CMD ["./nutri-baby-server"]
