@@ -213,7 +213,10 @@ func Load(configPath string) (*Config, error) {
 	fmt.Printf("Viper Debug (Pre-Unmarshal) - Database Host: %s\n", v.GetString("database.host"))
 	fmt.Printf("Viper Debug (Pre-Unmarshal) - Database User: %s\n", v.GetString("database.user"))
 	fmt.Printf("Viper Debug (Pre-Unmarshal) - Database DBNAME: %s\n", v.GetString("database.dbname"))
-	fmt.Printf("Viper Debug (Pre-Unmarshal) - Port Env: %s\n", os.Getenv("DATABASE_PORT"))
+	fmt.Printf("Viper Debug (Pre-Unmarshal) - Database Port: %s\n", v.GetString("database.port"))
+	fmt.Printf("Viper Debug (Pre-Unmarshal) - Port Env (Direct): %s\n", os.Getenv("DATABASE_PORT"))
+	fmt.Printf("Viper Debug (Pre-Unmarshal) - SSLMode: %s\n", v.GetString("database.sslmode"))
+	fmt.Printf("Viper Debug (Pre-Unmarshal) - Timezone: %s\n", v.GetString("database.timezone"))
 
 	// 5. 将所有来源合并到 defaultCfg 结构体中
 	if err := v.Unmarshal(defaultCfg); err != nil {
@@ -308,8 +311,8 @@ func GetDefaultConfig() *Config {
 			User:              "postgres",
 			Password:          "",
 			DBName:            "postgres", // 默认设为 postgres 以对齐 Supabase
-			SSLMode:           "disable",
-			Timezone:          "Asia/Shanghai", // 默认时区为中国北京时间
+			SSLMode:           "require",  // 针对 Supabase Pooler，默认要求 SSL
+			Timezone:          "",         // 移除硬编码时区，避免 URL 编码导致的 unknown time zone 错误
 			MaxOpenConns:      100,
 			MaxIdleConns:      10,
 			ConnMaxLifetime:   3600,
