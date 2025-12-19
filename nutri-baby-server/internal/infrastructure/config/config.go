@@ -3,6 +3,7 @@ package config
 import (
 	"fmt"
 	"net/url"
+	"os"
 	"reflect"
 	"strings"
 
@@ -193,7 +194,7 @@ func Load(configPath string) (*Config, error) {
 	if configPath != "" {
 		v.SetConfigFile(configPath)
 		if err := v.ReadInConfig(); err != nil {
-			// 如果主配置加载失败（如不存在或解析错），尝试加载 .example 作为结构参考
+			// 如果主配置加载失败，尝试加载 .example 作为结构参考
 			examplePath := configPath + ".example"
 			fmt.Printf("Warning: Primary config %s failed: %v. Trying example %s\n", configPath, err, examplePath)
 
@@ -207,6 +208,12 @@ func Load(configPath string) (*Config, error) {
 			fmt.Printf("Info: Successfully loaded config from %s\n", configPath)
 		}
 	}
+
+	// 调试：打印 Viper 当前识别到的数据库配置（合并后）
+	fmt.Printf("Viper Debug - Database Host: %s\n", v.GetString("database.host"))
+	fmt.Printf("Viper Debug - Database User: %s\n", v.GetString("database.user"))
+	fmt.Printf("Viper Debug - Database DBNAME: %s\n", v.GetString("database.dbname"))
+	fmt.Printf("Viper Debug - Port Env: %s\n", os.Getenv("DATABASE_PORT"))
 
 	// 5. 将所有来源合并到 defaultCfg 结构体中
 	if err := v.Unmarshal(defaultCfg); err != nil {
@@ -277,7 +284,7 @@ func GetDefaultConfig() *Config {
 			Port:              5432,
 			User:              "postgres",
 			Password:          "",
-			DBName:            "nutri_baby",
+			DBName:            "postgres", // 默认设为 postgres 以对齐 Supabase
 			SSLMode:           "disable",
 			Timezone:          "Asia/Shanghai", // 默认时区为中国北京时间
 			MaxOpenConns:      100,
