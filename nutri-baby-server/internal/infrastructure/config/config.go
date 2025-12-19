@@ -223,6 +223,19 @@ func Load(configPath string) (*Config, error) {
 	// 调试：在 Unmarshal 后打印结构体中的实际值
 	fmt.Printf("Viper Debug (After Unmarshal) - Struct Host: %s\n", defaultCfg.Database.Host)
 	fmt.Printf("Viper Debug (After Unmarshal) - Struct User: %s\n", defaultCfg.Database.User)
+	fmt.Printf("Viper Debug (After Unmarshal) - Struct DBName: %s\n", defaultCfg.Database.DBName)
+	fmt.Printf("Viper Debug (After Unmarshal) - Struct SSLMode: %s\n", defaultCfg.Database.SSLMode)
+
+	if defaultCfg.Database.Password == "" {
+		fmt.Printf("Warning: DATABASE_PASSWORD is empty!\n")
+	} else {
+		fmt.Printf("Info: DATABASE_PASSWORD is set (length: %d)\n", len(defaultCfg.Database.Password))
+	}
+
+	// 打印脱敏后的 DSN 供核对格式 (掩盖密码中段)
+	dsn := defaultCfg.Database.DSN()
+	maskedDSN := maskDSN(dsn)
+	fmt.Printf("Viper Debug - Final Masked DSN: %s\n", maskedDSN)
 
 	// 6. 最终检查：如果数据库主机为空，说明映射完全失败
 	if defaultCfg.Database.Host == "" {
@@ -375,4 +388,18 @@ func GetDefaultAIConfig() AIConfig {
 			},
 		},
 	}
+}
+
+// maskDSN 遮掩 DSN 中的密码部分
+func maskDSN(dsn string) string {
+	u, err := url.Parse(dsn)
+	if err != nil {
+		return "invalid dsn"
+	}
+	if u.User != nil {
+		if _, set := u.User.Password(); set {
+			u.User = url.UserPassword(u.User.Username(), "******")
+		}
+	}
+	return u.String()
 }
