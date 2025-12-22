@@ -5,7 +5,7 @@ WORKDIR /app
 
 # 复制前端源码
 COPY nutri-baby-app/package.json nutri-baby-app/package-lock.json ./
-RUN npm ci
+RUN npm install
 
 COPY nutri-baby-app/ .
 # 在构建时注入 API 地址（如果是统一入口访问，可以设为相对路径 /api/v1）
