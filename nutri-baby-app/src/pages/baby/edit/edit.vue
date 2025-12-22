@@ -16,7 +16,7 @@
         <view class="avatar-hero-card premium-shadow">
           <view class="avatar-upload-box" @click="chooseAvatar">
             <image
-              :src="formData.avatarUrl || '/static/default.png'"
+              :src="resolveImageUrl(formData.avatarUrl) || '/static/default.png'"
               mode="aspectFill"
               class="avatar-img"
             />
@@ -109,6 +109,7 @@
 import { ref, onMounted, watch } from "vue";
 import { formatDate } from "@/utils/date";
 import { uploadFile } from "@/utils/request";
+import { resolveImageUrl } from "@/utils/assets";
 import * as babyApi from "@/api/baby";
 import * as vaccineApi from "@/api/vaccine";
 import { fetchBabyDetail } from "@/store/baby";

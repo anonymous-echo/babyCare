@@ -24,7 +24,7 @@
           <view class="card-main">
             <view class="avatar-box premium-shadow">
               <image
-                :src="baby.avatarUrl || '/static/default.png'"
+                :src="resolveImageUrl(baby.avatarUrl) || '/static/default.png'"
                 mode="aspectFill"
                 class="avatar"
               />
@@ -164,6 +164,7 @@ import {
 import { userInfo, setDefaultBaby, getUserInfo } from "@/store/user";
 import { calculateAge } from "@/utils/date";
 import { goBack } from "@/utils/common";
+import { resolveImageUrl } from "@/utils/assets";
 import BabyCollaboratorsPreview from "@/components/BabyCollaboratorsPreview.vue";
 import { updateFamilyMember } from "@/store/collaborator";
 import * as babyApi from "@/api/baby";

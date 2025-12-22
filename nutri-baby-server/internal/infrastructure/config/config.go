@@ -313,8 +313,8 @@ func GetDefaultConfig() *Config {
 		Server: ServerConfig{
 			Port:         8080,
 			Mode:         "debug",
-			ReadTimeout:  30,
-			WriteTimeout: 30,
+			ReadTimeout:  120, // 增加超时时间以支持AI分析 (30s -> 120s)
+			WriteTimeout: 120,
 			BaseURL:      "http://localhost:8080",
 		},
 		Database: DatabaseConfig{

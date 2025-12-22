@@ -17,7 +17,7 @@
           <view class="avatar-wrapper">
             <image
               v-if="currentBaby.avatarUrl"
-              :src="currentBaby.avatarUrl"
+              :src="resolveImageUrl(currentBaby.avatarUrl)"
               mode="aspectFill"
               class="avatar-img"
             />
@@ -216,6 +216,7 @@ import { isLoggedIn, fetchUserInfo } from "@/store/user";
 import { currentBaby, fetchBabyList } from "@/store/baby";
 import { aiStore } from "@/store/ai";
 import { formatRelativeTime, calculateAge, formatDate } from "@/utils/date";
+import { resolveImageUrl } from "@/utils/assets";
 import DailyTipsCard from "@/components/DailyTipsCard.vue";
 
 // 临时类型定义，避免导入问题

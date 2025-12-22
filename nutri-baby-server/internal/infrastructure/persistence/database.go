@@ -73,5 +73,7 @@ func autoMigrate(db *gorm.DB) error {
 		&entity.SubscribeRecord{},     // 订阅消息：用户订阅记录
 		&entity.MessageSendLog{},      // 订阅消息：消息发送日志
 		&entity.MessageSendQueue{},    // 订阅消息：消息发送队列
+		&entity.AIAnalysis{},          // AI分析
+		&entity.DailyTips{},           // 每日建议
 	)
 }
