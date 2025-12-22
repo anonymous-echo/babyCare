@@ -8,6 +8,7 @@ import (
 
 	"github.com/wxlbd/nutri-baby-server/internal/domain/entity"
 	"github.com/wxlbd/nutri-baby-server/internal/domain/repository"
+	"github.com/wxlbd/nutri-baby-server/internal/infrastructure/config"
 	"github.com/wxlbd/nutri-baby-server/internal/infrastructure/eino/chain"
 	"github.com/wxlbd/nutri-baby-server/pkg/errors"
 	"go.uber.org/zap"
@@ -137,6 +138,7 @@ type aiAnalysisServiceImpl struct {
 	dailyTipsRepo  repository.DailyTipsRepository
 	babyRepo       repository.BabyRepository
 	chainBuilder   *chain.AnalysisChainBuilder
+	cfg            *config.Config
 	logger         *zap.Logger
 }
 
@@ -146,6 +148,7 @@ func NewAIAnalysisService(
 	dailyTipsRepo repository.DailyTipsRepository,
 	babyRepo repository.BabyRepository,
 	chainBuilder *chain.AnalysisChainBuilder,
+	cfg *config.Config,
 	logger *zap.Logger,
 ) AIAnalysisService {
 	return &aiAnalysisServiceImpl{
@@ -153,6 +156,7 @@ func NewAIAnalysisService(
 		dailyTipsRepo:  dailyTipsRepo,
 		babyRepo:       babyRepo,
 		chainBuilder:   chainBuilder,
+		cfg:            cfg,
 		logger:         logger,
 	}
 }
@@ -248,7 +252,20 @@ func (s *aiAnalysisServiceImpl) GenerateDailyTips(ctx context.Context, babyID st
 	)
 
 	// 使用分析链生成建议
-	tips, err := s.chainBuilder.GenerateDailyTips(ctx, baby, date)
+	// Fix: 使用独立的Context并设置超时时间，防止因HTTP写超时导致Context被取消
+	timeout := 120 * time.Second
+	if s.cfg.AI.Analysis.Timeout > 0 {
+		timeout = time.Duration(s.cfg.AI.Analysis.Timeout) * time.Second
+	}
+
+	// Create a detached context with timeout
+	// 使用 context.Background() 作为父 context，确保即使 http context 取消也能继续执行(如果需要)
+	// 但这会导致 ai 链继续运行。考虑到生成建议是昂贵操作且稍后会缓存，让它跑完是合理的
+	// 我们添加 timeout 来防止永久挂起
+	genCtx, cancel := context.WithTimeout(context.Background(), timeout)
+	defer cancel()
+
+	tips, err := s.chainBuilder.GenerateDailyTips(genCtx, baby, date)
 	if err != nil {
 		s.logger.Error("生成每日建议失败",
 			zap.String("baby_id", babyID),

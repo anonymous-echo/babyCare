@@ -66,7 +66,7 @@ func InitApp(cfg *config.Config) (*App, error) {
 	dataQueryTools := tools.NewDataQueryTools(feedingRecordRepository, sleepRecordRepository, diaperRecordRepository, growthRecordRepository, babyVaccineScheduleRepository, babyRepository, zapLogger)
 	batchDataTools := tools.NewBatchDataTools(babyRepository, feedingRecordRepository, sleepRecordRepository, growthRecordRepository, diaperRecordRepository, zapLogger)
 	analysisChainBuilder := chain.NewAnalysisChainBuilder(toolCallingChatModel, dataQueryTools, batchDataTools, zapLogger)
-	aiAnalysisService := service.NewAIAnalysisService(aiAnalysisRepository, dailyTipsRepository, babyRepository, analysisChainBuilder, zapLogger)
+	aiAnalysisService := service.NewAIAnalysisService(aiAnalysisRepository, dailyTipsRepository, babyRepository, analysisChainBuilder, cfg, zapLogger)
 	schedulerService := service.NewSchedulerService(babyVaccineScheduleRepository, feedingRecordRepository, userRepository, babyRepository, babyCollaboratorRepository, subscribeService, aiAnalysisService, cfg, zapLogger)
 	feedingRecordService := service.NewFeedingRecordService(babyRepository, babyCollaboratorRepository, userRepository, feedingRecordRepository, schedulerService, zapLogger)
 	sleepRecordService := service.NewSleepRecordService(babyRepository, babyCollaboratorRepository, userRepository, sleepRecordRepository, zapLogger)

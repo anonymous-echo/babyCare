@@ -175,9 +175,13 @@ type DailyTipList []DailyTip
 // Value 实现 driver.Valuer，将建议列表转换为JSON
 func (d DailyTipList) Value() (driver.Value, error) {
 	if len(d) == 0 {
-		return []byte("[]"), nil
+		return "[]", nil
 	}
-	return json.Marshal(d)
+	bytes, err := json.Marshal(d)
+	if err != nil {
+		return nil, err
+	}
+	return string(bytes), nil
 }
 
 // Scan 实现 sql.Scanner，从数据库JSON解析为结构体

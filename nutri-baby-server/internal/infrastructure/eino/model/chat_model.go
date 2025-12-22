@@ -41,6 +41,16 @@ func NewToolCallingChatModel(cfg *config.Config, logger *zap.Logger) (model.Tool
 			return chain.NewToolCallingMockChatModel(logger), nil
 		}
 		return cm, nil
+	case "doubao":
+		cm, err := NewDoubaoToolCallingChatModel(aiConfig.Doubao, logger)
+		if err != nil || cm == nil {
+			logger.Warn("Doubao 模型不可用，回退到支持工具调用的 Mock",
+				zap.Error(err),
+				zap.String("provider", aiConfig.Provider),
+			)
+			return chain.NewToolCallingMockChatModel(logger), nil
+		}
+		return cm, nil
 	default:
 		logger.Warn("未知的AI模型提供商，使用支持工具调用的模拟模型", zap.String("provider", aiConfig.Provider))
 		return chain.NewToolCallingMockChatModel(logger), nil
@@ -91,6 +101,20 @@ func NewGeminiToolCallingChatModel(cfg config.GeminiConfig, logger *zap.Logger) 
 		return nil, errors.Wrap(errors.InternalError, "创建 Gemini 模型失败", err)
 	}
 	return geminiChatModel, nil
+}
+
+// NewDoubaoToolCallingChatModel 创建豆包工具调用聊天模型
+// 注：豆包(VolcEngine Ark) 兼容 OpenAI 接口，复用 DeepSeek (通用OpenAI) 客户端实现
+func NewDoubaoToolCallingChatModel(cfg config.DoubaoConfig, logger *zap.Logger) (model.ToolCallingChatModel, error) {
+	cm, err := deepseek.NewChatModel(context.TODO(), &deepseek.ChatModelConfig{
+		Model:   cfg.Model,
+		APIKey:  cfg.APIKey,
+		BaseURL: cfg.BaseURL,
+	})
+	if err != nil {
+		return nil, errors.Wrap(errors.InternalError, "创建 Doubao 模型失败", err)
+	}
+	return cm, nil
 }
 
 //

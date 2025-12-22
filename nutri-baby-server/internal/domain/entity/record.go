@@ -58,7 +58,11 @@ func (f *FeedingDetail) Scan(value any) error {
 
 // Value 实现driver.Valuer接口
 func (f FeedingDetail) Value() (driver.Value, error) {
-	return json.Marshal(f)
+	bytes, err := json.Marshal(f)
+	if err != nil {
+		return nil, err
+	}
+	return string(bytes), nil
 }
 
 // SleepRecord 睡眠记录实体

@@ -135,6 +135,7 @@ type AIConfig struct {
 	DeepSeek DeepSeekConfig `mapstructure:"deepSeek"`
 	Analysis AnalysisConfig `mapstructure:"analysis"`
 	Gemini   GeminiConfig   `mapstructure:"gemini"`
+	Doubao   DoubaoConfig   `mapstructure:"doubao"`
 }
 
 type GeminiConfig struct {
@@ -171,6 +172,13 @@ type ERNIEConfig struct {
 
 // DeepSeekConfig Gemini配置
 type DeepSeekConfig struct {
+	APIKey  string `mapstructure:"api_key"`
+	BaseURL string `mapstructure:"base_url"`
+	Model   string `mapstructure:"model"`
+}
+
+// DoubaoConfig 豆包配置
+type DoubaoConfig struct {
 	APIKey  string `mapstructure:"api_key"`
 	BaseURL string `mapstructure:"base_url"`
 	Model   string `mapstructure:"model"`
@@ -394,8 +402,9 @@ func GetDefaultAIConfig() AIConfig {
 			BaseURL:   "https://aip.baidubce.com",
 			Model:     "ernie-3.5",
 		},
+		Doubao: GetDefaultDoubaoConfig(),
 		Analysis: AnalysisConfig{
-			Timeout:    30,
+			Timeout:    120,
 			RetryCount: 3,
 			BatchSize:  10,
 			CacheTTL:   3600,
@@ -407,6 +416,15 @@ func GetDefaultAIConfig() AIConfig {
 				"behavior": "分析以下宝宝的行为模式：",
 			},
 		},
+	}
+}
+
+// GetDefaultDoubaoConfig 获取默认豆包配置
+func GetDefaultDoubaoConfig() DoubaoConfig {
+	return DoubaoConfig{
+		APIKey:  "",
+		BaseURL: "https://ark.cn-beijing.volces.com/api/v3",
+		Model:   "ep-20240604095209-xxxxx", // 示例 Endpoint ID
 	}
 }
 
