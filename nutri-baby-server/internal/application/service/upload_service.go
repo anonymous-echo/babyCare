@@ -55,6 +55,9 @@ func NewUploadService(cfg *config.Config) *UploadService {
 				SecretKey: cfg.COS.SecretKey,
 			},
 		})
+		fmt.Printf("Info: Upload Service initialized with COS driver (Bucket: %s)\n", cfg.COS.BucketURL)
+	} else {
+		fmt.Printf("Info: Upload Service initialized with Local driver (Path: %s)\n", cfg.Upload.StoragePath)
 	}
 
 	return s
