@@ -99,7 +99,7 @@ func (h *SubscribeHandler) GetStatus(c *gin.Context) {
 // @Success 200 {object} response.Response
 // @Router /api/v1/subscribe/cancel [delete]
 func (h *SubscribeHandler) Cancel(c *gin.Context) {
-	openid, exists := c.Get("openid")
+	_, exists := c.Get("openid")
 	if !exists {
 		response.Error(c, errors.ErrUnauthorized)
 		return
